@@ -14,14 +14,38 @@ def index(request):
 def acende_led(request):
     if request.method == 'POST':
         try:
-            ledId = request.POST.get('ledId')
-            arduino = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
-            if ledId == '1':
-                print(ledId)
-                arduino.write(b'H')
-
+            ledCommand = request.POST.get('ledCommand')
+            arduino = serial.Serial('/dev/ttyACM1', 9600, timeout=1)
+            command = '{}'.format(ledCommand).encode()
+            arduino.write(command)
+            
             resposta = 'Led Aceso!'
         except Exception as e:
             resposta = f'Ocorreu o erro, {e}'
     
     return JsonResponse({'resposta':resposta})
+
+
+# def acende_led(request):
+#     global init
+#     if request.method == 'POST':
+#         try:
+#             ledCommand = request.POST.get('ledCommand')
+#             if ledCommand != 'H' or 'l':
+#                 if not init:
+#                     ledCommand = ledCommand.upper()
+#                     init = True
+#                     print(ledCommand)
+#                 else:
+#                     ledCommand = ledCommand.lower()
+#                     init = False
+
+#             arduino = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+#             command = '{}'.format(ledCommand).encode()
+#             arduino.write(command)
+            
+#             resposta = 'Led Aceso!'
+#         except Exception as e:
+#             resposta = f'Ocorreu o erro, {e}'
+    
+#     return JsonResponse({'resposta':resposta})

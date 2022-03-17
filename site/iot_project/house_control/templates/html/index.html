@@ -14,14 +14,27 @@
     </div>
     <div>
         {% csrf_token %}
-        <button type="button" onclick="LigaLed(1)">Acender led verde</button>
+        <button type="button" onclick="LigaLed('G')">Ligar geladeira</button>
+        <button type="button" onclick="LigaLed('g')">Desligar geladeira</button>
+        <hr>
+        <button type="button" onclick="LigaLed('F')">Ligar fogão</button>
+        <button type="button" onclick="LigaLed('f')">Desligar fogão</button>
+        <hr>
+        <button type="button" onclick="LigaLed('V')">Ligar ventilador</button>
+        <button type="button" onclick="LigaLed('v')">Desligar ventilador</button>
+        <hr>
+        <button type="button" onclick="LigaLed('T')">Ligar TV</button>
+        <button type="button" onclick="LigaLed('t')">Desligar TV</button>
+        <hr>
+        <button type="button" onclick="LigaLed('H')">Ligar todos</button>
+        <button type="button" onclick="LigaLed('l')">Desligar todos</button>
     </div>
 </body>
 <script>
-    function LigaLed(ledId){
+    function LigaLed(ledCommand){
         var xhr = new XMLHttpRequest();
         var formData = new FormData();
-        formData.append('ledId', ledId);
+        formData.append('ledCommand', ledCommand);
         
         xhr.open("POST", "{% url 'acende_led' %}", true);
         xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
