@@ -14,7 +14,8 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
+    {% load static %}
+    <link href="{% static 'styles.css' %}" rel="stylesheet" />
 </head>
 <body>
     <!-- Navigation-->
@@ -38,7 +39,7 @@
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
             <!-- Masthead Avatar Image-->
-            <img class="masthead-avatar mb-5" src="img/internet-of-things.png" alt="..." />
+            <img class="masthead-avatar mb-5" src="{% static 'img/internet-of-things.png' %}" alt="..." />
             <!-- Masthead Heading-->
             <h1 class="masthead-heading text-uppercase mb-0">GABIN - Casa Inteligente</h1>
             <!-- Icon Divider-->
@@ -48,7 +49,7 @@
                 <div class="divider-custom-line"></div>
             </div>
             <!-- Masthead Subheading-->
-            <p class="masthead-subheading font-weight-light mb-0">Gênio - Abhy - Borba - Isis - Neila</p>
+            <p class="masthead-subheading font-weight-light mb-0">Glênio - Abhy - Borba - Isis - Neila</p>
         </div>
     </header>
     <!-- Casa Section-->
@@ -56,13 +57,15 @@
         <div class="container">
             <!-- Casa Section Heading-->
             <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Casa</h2>
+            Selecione a porta arduino: <input id="port" type="text" name="port" placeholder="Arduino Port here">
+            <hr>
             <!-- Icon Divider-->
             <div class="divider-custom">
                 <div class="divider-custom-line"></div>
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
-            <img class="img-fluid" src="img/todos.png" alt="..."/>
+            <img class="img-fluid" src="{% static 'img/todos.png' %}" alt="..."/>
             <button class="buttonon" type="button" onclick="LigaLed('H')">Ligar</button>
             <button class="buttonoff" type="button" onclick="LigaLed('l')">Desligar</button>
         </div>
@@ -82,7 +85,7 @@
                 <!-- Quarto Item 1-->
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="Casa-item mx-auto">
-                        <img class="img-fluid" src="img/television.png" alt="..." />
+                        <img class="img-fluid" src="{% static 'img/television.png' %}" alt="..." />
                     </div>
                     <button class="buttonon1" type="button" onclick="LigaLed('T')">Ligar</button>
                     <button class="buttonoff1" type="button" onclick="LigaLed('t')">Desligar</button>
@@ -90,7 +93,7 @@
                 <!-- Quarto Item 2-->
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="Casa-item mx-auto" >
-                        <img class="img-fluid" src="img/ventilador.png" alt="..." />
+                        <img class="img-fluid" src="{% static 'img/ventilador.png' %}" alt="..." />
                     </div>
                     <button class="buttonon1" type="button" onclick="LigaLed('V')">Ligar</button>
                     <button class="buttonoff1" type="button" onclick="LigaLed('v')">Desligar</button>
@@ -113,7 +116,7 @@
                 <!-- Cozinha Item 1-->
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="Casa-item mx-auto">
-                        <img class="img-fluid" src="img/frigorifico.png" alt="..." />
+                        <img class="img-fluid" src="{% static 'img/frigorifico.png' %}" alt="..." />
                     </div>
                     <button class="buttonon1" type="button" onclick="LigaLed('G')">Ligar</button>
                     <button class="buttonoff1" type="button" onclick="LigaLed('g')">Desligar</button>
@@ -121,7 +124,7 @@
                 <!-- Cozinha Item 2-->
                 <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
                     <div class="Casa-item mx-auto">
-                        <img class="img-fluid" src="img/fogao.png" alt="..." />
+                        <img class="img-fluid" src="{% static 'img/fogao.png' %}" alt="..." />
                     </div>
                     <button class="buttonon1" type="button" onclick="LigaLed('F')">Ligar</button>
                     <button class="buttonoff1" type="button" onclick="LigaLed('f')">Desligar</button>
@@ -169,7 +172,9 @@
     function LigaLed(ledCommand){
         var xhr = new XMLHttpRequest();
         var formData = new FormData();
+        port = document.getElementById('port').value
         formData.append('ledCommand', ledCommand);
+        formData.append('port', port);
         
         xhr.open("POST", "{% url 'acende_led' %}", true);
         xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
