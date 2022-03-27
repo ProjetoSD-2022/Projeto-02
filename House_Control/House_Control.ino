@@ -10,6 +10,9 @@ void setup() {
   Serial.begin(9600);
   // initialize the LED pin as an output:
   pinMode(geladeiraPin, OUTPUT);
+  pinMode(fogaoPin, OUTPUT);
+  pinMode(ventPin, OUTPUT);
+  pinMode(tvPin, OUTPUT);
 }
 
 void loop() {
