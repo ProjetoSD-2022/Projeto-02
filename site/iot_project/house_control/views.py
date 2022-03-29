@@ -15,7 +15,7 @@ def acende_led(request):
     if request.method == 'POST':
         try:
             port = request.POST.get('port')
-            print('porta:', port)
+            # print('porta:', port)
             ledCommand = request.POST.get('ledCommand')
             # print(ledCommand)
             
